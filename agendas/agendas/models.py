@@ -39,16 +39,17 @@ class Topic(DeclarativeBase):
     number = Column(String)
     session = Column(Integer)
     period = Column(Integer)
+    description = Column(String)
 
-    __table_args__ = (UniqueConstraint('period', 'session', 'number'),)
+    # __table_args__ = (UniqueConstraint('period', 'session', 'number'),)
 
     def add_or_update(self, session):
         existing = session.query(Topic)\
-                          .filter_by(number=self.number, session=self.session, period=self.period) \
+                          .filter_by(title=self.title, session=self.session, period=self.period) \
                           .one_or_none()
 
         if existing:
-            existing.title = self.title
+            existing.number = self.number
             session.commit()
 
         else:
