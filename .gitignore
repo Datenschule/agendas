@@ -1,1 +1,4 @@
 *.pyc
+.idea
+app.db
+env
