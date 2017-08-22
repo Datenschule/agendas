@@ -14,6 +14,19 @@ class AgendasPipeline(object):
         create_deals_table(engine)
         self.Session = sessionmaker(bind=engine)
 
+    def open_spider(self, spider):
+        session = self.Session()
+        topics = session.query(Topic)
+        print("-----------")
+        print(topics)
+        print ('__')
+        print(topics.count())
+        print("-----------")
+        if topics.count() > 0:
+            [session.delete(topic) for topic in topics]
+        session.commit()
+
+
     def process_item(self, item, spider):
         """Save deals in the database.
 

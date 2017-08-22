@@ -36,16 +36,20 @@ class Topic(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
+    detail = Column(String)
     number = Column(String)
     session = Column(Integer)
-    period = Column(Integer)
     description = Column(String)
+    week = Column(String)
+    year = Column(String)
+    date = Column(String)
+    duration = Column(Integer)
 
     # __table_args__ = (UniqueConstraint('period', 'session', 'number'),)
 
     def add_or_update(self, session):
         existing = session.query(Topic)\
-                          .filter_by(title=self.title, session=self.session, period=self.period) \
+                          .filter_by(title=self.title, session=self.session, week=self.week, year=self.year, detail = self.detail) \
                           .one_or_none()
 
         if existing:
